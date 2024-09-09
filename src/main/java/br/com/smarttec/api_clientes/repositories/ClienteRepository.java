@@ -25,7 +25,17 @@ public class ClienteRepository {
     }
 
     public void update(Cliente cliente) throws Exception {
-        //  TODO
+        Connection connection = ConnectionFactory.getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("UPDATE CLIENTE SET nome=?, email=?, cpf=?, telefone=?, observacoes=? WHERE idcliente=?")
+        statement.setString(1, cliente.getNome());
+        statement.setString(2, cliente.getEmail());
+        statement.setString(3, cliente.getCpf());
+        statement.setString(4, cliente.getTelefone());
+        statement.setString(5, cliente.getObservacoes());
+        statement.execute();
+
+        statement.close();
     }
 
     public void delete(Cliente cliente) throws Exception {
