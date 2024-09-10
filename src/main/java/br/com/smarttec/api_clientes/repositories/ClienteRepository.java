@@ -21,7 +21,7 @@ public class ClienteRepository {
         statement.setString(5, cliente.getObservacoes());
         statement.execute();
 
-        statement.close();
+        connection.close();
     }
 
     public void update(Cliente cliente) throws Exception {
@@ -35,11 +35,17 @@ public class ClienteRepository {
         statement.setString(5, cliente.getObservacoes());
         statement.execute();
 
-        statement.close();
+        connection.close();
     }
 
     public void delete(Cliente cliente) throws Exception {
-        //  TODO
+
+        Connection connection = ConnectionFactory.getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM CLIENTE WHERE idcliente=?");
+        statement.execute();
+
+        connection.close();
     }
 
     public List<Cliente> findAll() throws Exception {
