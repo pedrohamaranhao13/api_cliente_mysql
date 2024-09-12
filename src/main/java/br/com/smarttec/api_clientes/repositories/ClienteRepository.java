@@ -47,6 +47,7 @@ public class ClienteRepository {
         Connection connection = ConnectionFactory.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("DELETE FROM CLIENTE WHERE idcliente=?");
+        statement.setInt(1, cliente.getIdCliente());
         statement.execute();
 
         connection.close();

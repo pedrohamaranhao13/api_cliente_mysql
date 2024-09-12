@@ -62,10 +62,27 @@ public class ClienteController {
         }
     }
 
-    @DeleteMapping
-    public String delete() {
-        //TODO
-        return null;
+    @DeleteMapping("{idCliente}")
+    public String delete(@PathVariable("idCliente") Integer idCliente) {
+
+        try {
+
+            ClienteRepository clienteRepository = new ClienteRepository();
+            Cliente cliente = clienteRepository.findById(idCliente);
+
+            if (cliente != null) {
+
+                clienteRepository.delete(cliente);
+                return "Cliente excluído com sucesso!";
+            }
+            else {
+                return "Cliente não encontrado.";
+            }
+
+
+        } catch (Exception e) {
+            return "Erro: " + e.getMessage();
+        }
     }
 
     @GetMapping
