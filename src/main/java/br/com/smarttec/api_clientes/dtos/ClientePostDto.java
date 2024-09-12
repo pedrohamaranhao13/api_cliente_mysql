@@ -1,4 +1,4 @@
-package br.com.smarttec.api_clientes.entities;
+package br.com.smarttec.api_clientes.dtos;
 
 import lombok.*;
 
@@ -7,13 +7,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Cliente {
+public class ClientePostDto {
 
-    private Integer idCliente;
     private String nome;
-    private String cpf;
     private String email;
+    private String cpf;
     private String telefone;
     private String observacoes;
-
 }

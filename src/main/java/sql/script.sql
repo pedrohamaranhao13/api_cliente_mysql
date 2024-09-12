@@ -1,5 +1,5 @@
 CREATE TABLE CLIENTE (
-    idcliente   INTEGER PRIMARY KEY,
+    idcliente   INTEGER IDENTITY PRIMARY KEY,
     nome        VARCHAR(150)    NOT NULL,
     cpf         VARCHAR(11)     NOT NULL,
     email       VARCHAR(50)     NOT NULL,
