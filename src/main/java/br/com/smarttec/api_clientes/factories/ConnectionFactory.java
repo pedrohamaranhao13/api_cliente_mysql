@@ -2,7 +2,6 @@ package br.com.smarttec.api_clientes.factories;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class ConnectionFactory {
 
@@ -13,15 +12,8 @@ public class ConnectionFactory {
 
     public static Connection getConnection() throws Exception {
 
-        try {
-            Class.forName(DRIVER);
-            return DriverManager.getConnection(HOST, USER, PASSWORD);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();  // Mostra a pilha de exceções no console
-            throw new RuntimeException("Driver não encontrado: " + e.getMessage(), e);
-        } catch (SQLException e) {
-            e.printStackTrace();  // Mostra a pilha de exceções no console
-            throw new RuntimeException("Erro ao conectar ao banco de dados: " + e.getMessage(), e);
-        }
+
+        Class.forName(DRIVER);
+        return DriverManager.getConnection(HOST, USER, PASSWORD);
     }
 }

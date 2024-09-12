@@ -3,7 +3,7 @@ package br.com.smarttec.api_clientes.repositories;
 import br.com.smarttec.api_clientes.entities.Cliente;
 import br.com.smarttec.api_clientes.factories.ConnectionFactory;
 
-import javax.xml.transform.Result;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,6 +36,7 @@ public class ClienteRepository {
         statement.setString(3, cliente.getCpf());
         statement.setString(4, cliente.getTelefone());
         statement.setString(5, cliente.getObservacoes());
+        statement.setInt(6, cliente.getIdCliente());
         statement.execute();
 
         connection.close();
@@ -82,6 +83,7 @@ public class ClienteRepository {
         Connection connection = ConnectionFactory.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM CLIENTE WHERE idcliente=?");
+        statement.setInt(1, idCliente);
         ResultSet resultSet = statement.executeQuery();
 
         Cliente cliente = null;
