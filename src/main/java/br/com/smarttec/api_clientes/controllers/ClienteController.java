@@ -4,14 +4,17 @@ import br.com.smarttec.api_clientes.dtos.ClientePostDto;
 import br.com.smarttec.api_clientes.dtos.ClientePutDto;
 import br.com.smarttec.api_clientes.entities.Cliente;
 import br.com.smarttec.api_clientes.repositories.ClienteRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/clientes")
 public class ClienteController {
 
     @PostMapping
-    public String post(@RequestBody ClientePostDto dto) {
+    public ResponseEntity<String> post(@RequestBody ClientePostDto dto) {
 
         try {
 
@@ -25,16 +28,16 @@ public class ClienteController {
             ClienteRepository clienteRepository = new ClienteRepository();
             clienteRepository.create(cliente);
 
-            return "Cliente cadastrado com sucesso!";
+            return ResponseEntity.status(200).body("Cliente cadastrado com sucesso!");
 
         } catch (Exception e) {
 
-            return "Erro: " + e.getMessage();
+            return ResponseEntity.status(500).body("Erro: " + e.getMessage());
         }
     }
 
     @PutMapping
-    public String put(@RequestBody ClientePutDto dto) {
+    public ResponseEntity<String> put(@RequestBody ClientePutDto dto) {
 
         try {
 
@@ -51,19 +54,19 @@ public class ClienteController {
 
                 clienteRepository.update(cliente);
 
-                return "Cliente atualizado com sucesso.";
+                return ResponseEntity.status(200).body("Cliente atualizado com sucesso.");
             }
             else {
-                return "Cliente não encontrado";
+                return ResponseEntity.status(400).body("Cliente não encontrado");
             }
 
         } catch (Exception e) {
-            return "Erro : " + e.getMessage();
+            return ResponseEntity.status(500).body("Erro : " + e.getMessage());
         }
     }
 
     @DeleteMapping("{idCliente}")
-    public String delete(@PathVariable("idCliente") Integer idCliente) {
+    public ResponseEntity<String> delete(@PathVariable("idCliente") Integer idCliente) {
 
         try {
 
@@ -73,21 +76,40 @@ public class ClienteController {
             if (cliente != null) {
 
                 clienteRepository.delete(cliente);
-                return "Cliente excluído com sucesso!";
+                return ResponseEntity.status(200).body("Cliente excluído com sucesso!");
             }
             else {
-                return "Cliente não encontrado.";
+                return ResponseEntity.status(500).body("Cliente não encontrado.");
             }
 
 
         } catch (Exception e) {
-            return "Erro: " + e.getMessage();
+            return ResponseEntity.status(500).body("Erro: " + e.getMessage());
         }
     }
 
     @GetMapping
-    public String getAll() {
-        //TODO
-        return null;
+    public List<Cliente> getAll() {
+        try {
+            ClienteRepository clienteRepository = new ClienteRepository();
+            return clienteRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping("{idCliente}")
+    public Cliente findById(@PathVariable("idCliente") Integer idCliente) {
+        try {
+
+            ClienteRepository clienteRepository = new ClienteRepository();
+            return clienteRepository.findById(idCliente);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }
